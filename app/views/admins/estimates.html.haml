@@ -1,0 +1,59 @@
+.page-subheader
+  .container-fluid
+    .row.align-items-center
+      .col-md-7
+        .list
+          .list-item.pl-0
+            .list-thumb.ml-0.mr-3.pr-3.b-r.text-muted
+              %i.fa.fa-user
+            .list-body
+              .list-title
+                %h3 #{@sub.sub_type.name} Estimate Breakdown 
+                %p#p_id.hidden #{@project.id}
+      .col-md-5.d-flex.justify-content-end.h-md-down
+        %nav{:'aria-label'=>"breadcrumb"}
+          %ol.breadcrumb.no-padding.bg-trans.mb-0
+            %li.breadcrumb-item
+              = link_to root_path do 
+                %i.fa.fa-home.mr-2.fs14
+            %li.breadcrumb-item 
+              = link_to sub_details_admin_path(:project_id => @project.id) do
+                #{@project.name}
+            %li.breadcrumb-item.active #{@sub.sub_type.name}
+
+.page-content
+  .container-fluid.mt-30
+    .col-lg-2.mb-30.rightside
+      = link_to 'Add Estimate', new_estimate_admin_path(:s=>@sub.id), :class=>'btn btn-primary form-control'
+    .bg-white.table-responsive.rounded.shadow-sm.mb-30.pt-10.pb-10
+      %table.table.mb-0.table-striped{:cellspacing=>"0", :width=>"100%", :id=>'data-table'}
+        %thead
+          %tr
+            %th Event 
+            %th Note 
+            %th Amount
+            %th Date 
+            %th Image 
+        %tbody
+          -@sub.estimates.each do |sub|
+            %tr
+              %td #{sub.event_type} 
+              %td #{sub.notes} 
+              %td #{sub.amount} 
+              %td #{sub.event_date} 
+              %td 
+                - if !sub.image.nil?
+                  = link_to sub.image.file.url do
+                    = image_tag sub.image.file.url(:thumb)
+
+
+
+= javascript_include_tag 'jquery.dataTables.min'
+= javascript_include_tag 'dataTables.bootstrap4.min'
+= javascript_include_tag 'dataTables.responsive.min'
+= javascript_include_tag 'responsive.bootstrap4.min'
+= javascript_include_tag 'datatables-custom'
+:javascript
+  $('#data-table').DataTable({responsive:true});
+
+

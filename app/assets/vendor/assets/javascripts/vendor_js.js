@@ -1,0 +1,11 @@
+//= require jquery.min
+//= require jquery-ui.min
+//= require jquery.preloader.min
+//= require jquery.lettering
+//= require jquery.textillate
+//= require jquery.preloader.min
+//= require jquery.lettering
+//= require bootstrap.min
+//= require popper.min 
+//= require smooth-scroll.min 
+//= require sweetalert.min

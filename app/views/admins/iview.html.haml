@@ -1,0 +1,36 @@
+.page-subheader
+  .container-fluid
+    .row.align-items-center
+      .col-md-7
+        .list
+          .list-item.pl-0
+            .list-thumb.ml-0.mr-3.pr-3.b-r.text-muted
+              %i.fa.fa-user
+            .list-body
+              .list-title
+                %h3 #{@detail.nil? ? @project.name : @detail.event_type}
+                %p#p_id.hidden #{@project.id}
+      .col-md-5.d-flex.justify-content-end.h-md-down
+        %nav{:'aria-label'=>"breadcrumb"}
+          %ol.breadcrumb.no-padding.bg-trans.mb-0
+            %li.breadcrumb-item
+              = link_to root_path do 
+                %i.fa.fa-home.mr-2.fs14
+            %li.breadcrumb-item 
+              = link_to sub_details_admin_path(:project_id => @project.id) do
+                #{@project.name}
+            - if !@is_project#{@sub.sub_type.name}
+              %li.breadcrumb-item.active 
+                - if @sub_detail 
+                  = link_to sub_breakdown_admin_path(:s=>@sub.id) do 
+                    #{@sub.sub_type.name} Actuals
+                - else 
+                  = link_to estimates_admin_path(:s=>@sub.id) do 
+                    #{@sub.sub_type.name} Estimates
+
+.page-content
+  .container-fluid
+    .col-lg-12.mt-30
+      .portlet-box.portlet-shadow
+        .portlet-body.no-padding
+          = image_tag @url 

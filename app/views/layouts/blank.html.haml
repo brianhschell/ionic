@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+%html
+  %head
+    %title Ionic
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+  %body.bg-white
+    - if @message or flash[:alert] or flash[:notice]
+      .alert.alert-primary{:role=>"alert"}
+        = @message || flash[:alert] || flash[:notice]
+    = yield 

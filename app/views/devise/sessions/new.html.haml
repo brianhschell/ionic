@@ -1,0 +1,32 @@
+#page-wrapper.page-wrapper
+  %main.content
+    .container.flex.d-flex
+      .row.flex.align-items-center
+        .col-lg-4.mt-60.mb-60.col-md-6.col-sm-12.ml-auto.mr-auto
+          .bg-white.overflow-hidden.rounded
+            .title-sep.text-center.sep-white.mt-20
+              %span.font600.fs16.text-dark Sign In
+            .p-3.pb-30
+              = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+                .input-icon-group
+                  .d-flex.flex.flex-row
+                    =f.label :email, 'Username', :class=>'flex d-flex mr-auto'
+                  .input-icon-append
+                    %i.fa.fa-user
+                    = f.email_field :email, autofocus: true, autocomplete: "email", :class=> 'form-control' 
+                .input-icon-group
+                  .d-flex.flex.flex-row
+                    =f.label :password, 'Password', :class=>'flex d-flex mr-auto'
+                  .input-icon-append
+                    %i.fa.fa-lock
+                    = f.password_field :password, :autocomplete=> "off", :class=>'form-control' 
+                %button{:type=> :submit,  :class=>"btn btn-gradient-primary btn-block btn-lg"} Log In
+                .customUi-checkbox.pb-2.mt-30
+                  =f.check_box :remember_me ,:name=>"agree"
+                  =f.label :remember_me  do
+                    %span.label-checkbox 
+                    %span.label-helper Remember Me
+                .input-icon-group
+                  .d-flex.flex.flex-row
+                    .flex.d-flex.ml-auto.justify-content-end
+                      =link_to 'Forgot Password', "#", :class=>"text-primary fs12"

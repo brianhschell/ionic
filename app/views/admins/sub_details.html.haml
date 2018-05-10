@@ -1,0 +1,115 @@
+.page-subheader
+  .container-fluid
+    .row.align-items-center
+      .col-md-7
+        .list
+          .list-item.pl-0
+            .list-thumb.ml-0.mr-3.pr-3.b-r.text-muted
+              %i.fa.fa-user
+            .list-body
+              .list-title
+                %h3 #{@project.name} 
+                %p#p_id.hidden #{@project.id}
+
+      .col-md-5.d-flex.justify-content-end.h-md-down
+        %nav{:'aria-label'=>"breadcrumb"}
+          %ol.breadcrumb.no-padding.bg-trans.mb-0
+            %li.breadcrumb-item
+              = link_to root_path do 
+                %i.fa.fa-home.mr-2.fs14
+            %li.breadcrumb-item #{@project.name}
+
+.page-content
+  - if @project.has_image?
+    .col-lg-12.mt-30
+      -@project.images.each do |img|
+        .col-lg-2.align-items-center.leftside 
+          = link_to iview_admin_path(:u=>img.file.url, :project=>@project.id) do 
+            = image_tag img.file.url(:thumb) 
+.page-content
+  .col-lg-12.mt-30
+    .col-lg-6.leftside.pl-0
+      .portlet-box.portlet-gutter.portlet-shadow.ui-buttons-col.mb-30
+        .portlet-header
+          Subs
+        .portlet-body
+          = form_tag sub_details_admin_path, :class=>'form-inline' do
+            .input-group.mb-2.mr-sm-5
+              = collection_select(:sub_type_id, :id, SubType.all, :id, :name, {multiple: false, :prompt => "Add Sub"}, :class=>'form-control w100' )
+              = hidden_field_tag :project_id, @project.id
+            .input-group.mb-2.mr-sm-3
+              = submit_tag 'Add To Project', :class=>'form-control btn btn-primary'
+            .input-group.mb-2.mr-sm-3
+              = link_to 'Add New Sub Type', 'javascript:;', :class=>'form-control btn btn-primary' , :onclick=>"createNewSub()"
+    .col-lg-6.leftside
+      .portlet-box.portlet-gutter.portlet-shadow.ui-buttons-col.mb-30
+        .portlet-header
+          Images 
+        .portlet-body
+          = form_tag sub_details_admin_path, :url=>new_estimate_admin_path,  :multipart=> true , :class=>'form-inline' do 
+            .input-group.mb-2.mr-sm-3
+              %input{:name=>"file", :type=>"file",  :multiple=>'multiple' }
+              = hidden_field_tag :project_id, @project.id
+              = hidden_field_tag :add_image, 'true'
+            .input-group.mb-2.mr-sm-3
+              =submit_tag 'Add' , :class=>'form-control btn btn-primary' 
+
+  .container-fluid.mt-30
+    .bg-white.table-responsive.rounded.shadow-sm.mb-30.pt-10.pb-10
+      %table.table.mb-0.table-striped{:cellspacing=>"0", :width=>"100%", :id=>'data-table'}
+        %thead
+          %tr
+            %th Sub 
+            %th Estimate 
+            %th Actual
+            %th Balance 
+        %tbody
+          -@project.subs.each do |sub|
+            %tr
+              %td #{sub.sub_type.name} 
+              %td 
+                = link_to estimates_admin_path(:s=>sub.id) do 
+                  $#{sub.total_estimate}
+              %td 
+                = link_to sub_breakdown_admin_path(:s=>sub.id) do 
+                  $#{sub.total_actual} 
+              %td 
+                = link_to sub_breakdown_admin_path(:s=>sub.id) do 
+                  $#{sub.total_balance} 
+.page-content
+  .container-fluid.mt-30
+    .flex
+      .p-3.pt-0.pb-0
+        .row
+          .col-xl-9.col-lg-9.col-md-8.d-flex.flex-column.pt-3.pb-3
+            .row
+              -@project.subs.each do |sub|
+                .col-xl-4.col-lg-6.col-md-6.col-sm-6.mb-30
+                  .iCard.border1.p-2.rounded.bg-white
+                    = link_to '#'  do
+                      =image_tag sub.find_photo, :class=>"img-fluid rounded for_project"
+                    .iCard-content.p-1.pt-15.pb-15
+                      %h5  #{sub.sub_type.name}
+                      %span.iCard-meta.fs12.d-block.mb-15 Posted on <strong class="font600">24 Feb. 2018</strong> 
+                      .thumbnails-group.mb-15
+                        %h3.fs16.text-dark.font400.mb-5.text-capitalize #{pluralize(sub.sub_details.count, 'record')}
+                      .pt-15.b-t.text-right
+                        .row.align-items-center
+                          .col-5.text-left.b-r
+                            %span.d-block.pb-1.fs13 In Progress
+                            .progress.bg-faded{:style=>"height: 6px"}
+                              .progress-bar.bg-primary{:style=>"height: 6px; width: 40%"}
+                          .col-6
+                            =link_to sub_breakdown_admin_path(:s=>sub.id) , :class=>"btn btn-gradient-light btn-icon btn-icon-right btn-sm" do
+                              %i.fa.fa-arrow-right
+                              Details
+
+=   javascript_include_tag 'jquery.dataTables.min'
+=   javascript_include_tag 'dataTables.bootstrap4.min'
+=   javascript_include_tag 'dataTables.responsive.min'
+=   javascript_include_tag 'responsive.bootstrap4.min'
+=   javascript_include_tag 'datatables-custom'
+:javascript
+    $('#data-table').DataTable({responsive:true});
+
+

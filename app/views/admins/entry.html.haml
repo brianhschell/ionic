@@ -1,0 +1,68 @@
+.page-subheader
+  .container-fluid
+    .row.align-items-center
+      .col-md-7
+        .list
+          .list-item.pl-0
+            .list-thumb.ml-0.mr-3.pr-3.b-r.text-muted
+              %i.fa.fa-user
+            .list-body
+              .list-title
+                %h3 #{@sub.sub_type.name} Breakdown 
+                %p#p_id.hidden #{@project.id}
+      .col-md-5.d-flex.justify-content-end.h-md-down
+        %nav{:'aria-label'=>"breadcrumb"}
+          %ol.breadcrumb.no-padding.bg-trans.mb-0
+            %li.breadcrumb-item
+              = link_to root_path do 
+                %i.fa.fa-home.mr-2.fs14
+            %li.breadcrumb-item 
+              = link_to sub_details_admin_path(:project_id => @project.id) do
+                #{@project.name}
+            %li.breadcrumb-item 
+              = link_to sub_breakdown_admin_path(:s => @sub.id) do
+                #{@sub.sub_type.name}
+            %li.breadcrumb-item.active New Entry 
+
+.page-content
+  .container-fluid.mt-30
+    .row
+      .col-lg-12
+        .portlet-box.portlet-gutter.ui-buttons-col.mb-30
+          .portlet-header.flex-row.flex.d-flex.align-items-center.b-b
+            .flex.d-flex.flex-column
+              %h3 Entry for #{@sub.sub_type.name} 
+              %span.portlet-subtitle Enter details and upload photo 
+          .portlet-body
+            = form_for @new_entry, {:url=>entry_admin_path, html: { multipart: true }}  do 
+              .form-group
+                =label_tag :event_type, 'Title'
+                =text_field_tag :event_type, '', :class=>'form-control'
+              .form-group
+                =label_tag :notes, 'Desc'
+                =text_field_tag :notes, '', :class=>'form-control'
+              .col-lg-12.pl-0.w100
+                .col-lg-6.leftside.pl-0
+                  .form-group
+                    =label_tag :amount, 'Amount'
+                    =text_field_tag :amount, '', :class=>'form-control'
+                .col-lg-6.leftside
+                  .form-group
+                    =label_tag :invoice, 'Invoice?'
+                    =check_box_tag :invoice, 1, false, :class=>'form-control'
+              .form-group
+                =label_tag :event_date, 'Date'
+                =text_field_tag :event_date, '', :class=>'form-control', :id=>'event_date'
+              .form-group
+                =label_tag :image, 'Image'
+                #dropzoneFrom.dropzone
+                  .fallback>
+                    %input{:name=>"file", :type=>"file",  :multiple=>'multiple' }
+              .form-group
+                =hidden_field_tag :s, @sub.id
+                =hidden_field_tag :add_entry, 'true'
+                =submit_tag 'Save', :class=>'btn btn-primary form-control'
+= javascript_include_tag 'jquery.datetimepicker.full.min'
+:javascript
+  $('#event_date').datetimepicker();
+

@@ -1,0 +1,61 @@
+
+.container-fluid
+  .col-lg-12.mt-30
+    .portlet-box.portlet-shadow
+      .portlet-header.flex-row.flex.d-flex.align-items-center
+        .flex.d-flex.flex-column
+          %h3 Projects 
+      .portlet-body.no-padding
+        %table.table.table-hover.mb-30
+          %thead.thead-dark
+            %tr
+              %th Name
+              %th Start Date
+              %th Est. End Date
+              %th Est. Length 
+              %th Action
+          %tbody
+            -@projects.each_with_index do |p, idx|
+              %tr
+                %td #{p.name}
+                - if p.start_date
+                  %td #{p.start_date.strftime('%m/%d/%y')} 
+                - else 
+                  %td N/A
+                - if p.end_date
+                  %td #{p.end_date.strftime('%m/%d/%y')} 
+                - else 
+                  %td N/A
+                %td 
+                  - if p.start_date and p.end_date
+                    =distance_of_time_in_words(p.start_date,p.end_date)
+                  - else
+                    N/A
+                %td 
+                  = link_to 'Details', sub_details_admin_path(:project_id=>p.id)
+  .col-lg-12.mt-30
+    .portlet-box.portlet-gutter.portlet-shadow.ui-buttons-col.mb-30
+      .portlet-header.flex-row.flex.d-flex.align-items-center.b-b
+        .flex.d-flex.flex-column
+          %h3 New Project 
+      .portlet-body
+        =form_tag projects_admin_path, :class=>'form-inline' do 
+          .col-lg-4
+            .p-3.bg-white.rounded
+              %span.fs-1x.d-block.pb-2 Project Name 
+              = text_field_tag :project_name, '', :class=>'form-control w100', :placeholder=>"Project Name"
+          .col-lg-3
+            .p-3.bg-white.rounded
+              %span.fs-1x.d-block.pb-2 Start Date 
+              =text_field_tag :start_date, '', :id=>'datepicker', :placeholder=>"Choose Date", :class=>"form-control"
+          .col-lg-3
+            .p-3.bg-white.rounded
+              %span.fs-1x.d-block.pb-2 Est. End Date 
+              =text_field_tag :end_date, '', :id=>'enddatepicker', :placeholder=>"Choose Date", :class=>"form-control"
+          .col-lg-1
+            .p-3.mt-30
+              = button_tag "Save", :type=>"submit",  :class=>"btn btn-primary mb-2", :title=>'Save'
+= javascript_include_tag 'jquery.datetimepicker.full.min'
+:javascript
+  $('#datepicker').datetimepicker();
+  $('#enddatepicker').datetimepicker();

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+%html
+  %head
+    %title Ionic
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+  %body
+    - if @message or flash[:alert] or flash[:notice]
+      .alert.alert-primary{:role=>"alert"}
+        = @message || flash[:alert] || flash[:notice]
+    #page-wrapper.page-wrapper
+      %aside#page-aside.page-aside
+        .sidenav.whiteNav
+          =link_to root_path, :class=>"app-logo d-flex flex flex-row align-items-center overflow-hidden justify-content-center" do
+            =image_tag('icon.png') 
+            %span.logo-text.d-inline-flex
+              %span.font700.d-inline-block.mr-1 IONIC
+          .flex
+            .aside-content
+              %ul#metisMenu.metisMenu
+                %li.nav-title 
+                  ADMIN
+                  %span.nav-thumbnail ADM
+                %li.active
+                  %i.fa.fa-home.nav-thumbnail
+                  =link_to projects_admin_path do  
+                    %span.nav-text
+                      Projects
+                %li
+                  %i.fa.fa-calendar.nav-thumbnail
+                  = link_to root_path do 
+                    %span.nav-text Timeline 
+                %li
+                  %i.fa.fa-address-book.nav-thumbnail
+                  = link_to root_path do 
+                    %span.nav-text Users 
+                 
+          .aside-footer.p-3.pl-25
+            %div
+              App Version - 1.0
+      %main.content
+        %header.navbar.page-header.darkHeader.navbar-expand-lg
+          %ul.nav.flex-row.mr-auto
+            %li.nav-item
+              =link_to "javascript:void(0)", :class=>"nav-link sidenav-btn h-lg-down" do
+                %span.navbar-toggler-icon
+              =link_to "#page_aside", :class=>"nav-link sidenav-btn h-lg-up", :'data-toggle'=>"dropdown" ,:'data-target'=>"#page-aside" do 
+                %span.navbar-toggler-icon
+          %ul.nav.flex-row.order-lg-2.ml-auto.nav-icons
+            %li.nav-item.dropdown.user-dropdown.align-items-center
+              = link_to '#', :class=>"nav-link", :id=>"dropdown-user", :role=>"button", :'data-toggle'=>"dropdown" do
+                %span.user-states.states-online
+                  =image_tag('avatar6.jpg', :width=>35, :class=>'img-fluid rounded-circle')
+                %span.ml-2.h-lg-down.dropdown-toggle
+                  Hi, #{current_user.first_name} 
+              .dropdown-menu.dropdown-menu-right{:'aria-labelledby'=>"dropdown-user"}
+                .text-center.p-3.pt-0.b-b.mb-5
+                  %span.mb-0.d-block.font300.text-title.fs-1x 
+                    Hi! 
+                    %span.font700 #{current_user.first_name} #{current_user.last_name} 
+                  %span.fs12.mb-0.text-muted Administrator
+                = link_to users_sign_out_path, :class=>"dropdown-item" do
+                  %i.fa.fa-mail-reply
+                  logout
+
+        =yield
+  = javascript_include_tag 'plugins'
+  = javascript_include_tag 'appUi-custom'
+  = javascript_include_tag 'jquery.peity.min.js'
+  = javascript_include_tag 'select2.min'
