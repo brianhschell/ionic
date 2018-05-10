@@ -17,5 +17,6 @@
 /yarn-error.log
 
 vendor/template/*
+public/*
 
 .byebug_history

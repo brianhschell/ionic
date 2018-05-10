@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   root to: 'admins#projects'
 
-  devise_for :users, :skip => [:registrations], controllers: {
+  devise_for :users,  controllers: {
     sessions: 'user/sessions',
     registrations: 'user/registrations',
     confirmations: 'user/confirmations',

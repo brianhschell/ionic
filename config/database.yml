@@ -52,3 +52,4 @@ production:
   database: ionic_production
   username: ionic
   password: <%= ENV['IONIC_DATABASE_PASSWORD'] %>
+  socket: /var/run/mysqld/mysqld.sock 
