@@ -12,4 +12,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w( assets/javascripts/dashboard02-custom.js assets/javascripts/jquery.peity.min.js assets/javascripts/plugins.js assets/javascripts/appUi-custom.js  assets/javascripts/select2.min.js assets/javascripts/jquery.datetimepicker.full.min.js assets/javascripts/datatables-custom.js assets/javascripts/jquery.dataTables.min.js assets/javascripts/dataTables.bootstrap4.min.js assets/javascripts/dataTables.responsive.min.js assets/javascripts/responsive.bootstrap4.min.js assets/javascripts/dropzone.js)
+Rails.application.config.assets.precompile += %w( dashboard02-custom.js jquery.peity.min.js plugins.js appUi-custom.js  select2.min.js jquery.datetimepicker.full.min.js datatables-custom.js jquery.dataTables.min.js dataTables.bootstrap4.min.js dataTables.responsive.min.js responsive.bootstrap4.min.js dropzone.js)
