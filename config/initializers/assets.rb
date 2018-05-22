@@ -7,9 +7,12 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
+Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'javascripts')
+Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'stylesheets')
+Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'fonts')
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w( dashboard02-custom.js jquery.peity.min.js plugins.js appUi-custom.js  select2.min.js jquery.datetimepicker.full.min.js datatables-custom.js jquery.dataTables.min.js dataTables.bootstrap4.min.js dataTables.responsive.min.js responsive.bootstrap4.min.js dropzone.js)
+Rails.application.config.assets.precompile += %w( dashboard02-custom.js jquery.peity.min.js plugins.js appUi-custom.js  select2.min.js jquery.datetimepicker.full.min.js datatables-custom.js jquery.dataTables.min.js dataTables.bootstrap4.min.js dataTables.responsive.min.js responsive.bootstrap4.min.js dropzone.js *.png *.jpg *.jpeg *.gif fontawesome-all.min.css *.woff2 *.woff *.ttf)
